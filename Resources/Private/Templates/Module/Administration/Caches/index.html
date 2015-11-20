@@ -1,0 +1,30 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<f:layout name="BackendSubModule"/>
+
+<f:section name="content">
+    <div class="neos-row-fluid">
+        <table class="neos-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Backend</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <f:for each="{caches}" as="cache">
+                <tr>
+                    <td title="{cache.identifier}">{cache.label}</td>
+                    <td>{cache.backendType}</td>
+                    <td class="neos-action">
+                        <div class="neos-pull-right">
+                            <f:link.action action="flush" arguments="{cacheIdentifier: cache.identifier}" class="neos-button neos-button-primary" title="Flush this cache">
+                                <i class="icon-refresh icon-white"></i> Flush
+                            </f:link.action>
+                        </div>
+                    </td>
+                </tr>
+            </f:for>
+        </table>
+        <p class="neos-help-inline"><i class="icon-info"></i> Please note that having to flush the content caches manually usually is a sign of improper configuration. <a href="neos.readthedocs.org/en/stable/CreatingASite/ContentCache.html">More about this</a></p>
+    </div>
+</f:section>

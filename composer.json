@@ -1,0 +1,24 @@
+{
+  "name": "flownative/neos-cachemanagement",
+  "type": "typo3-flow-package",
+  "description": "Neos cache management backend module",
+  "authors": [
+    {
+      "name": "Robert Lemke",
+      "email": "robert@flownative.com",
+      "homepage": "https://www.flownative.com",
+      "role": "Developer"
+    }
+  ],
+  "license": [
+    "MIT"
+  ],
+  "require": {
+    "typo3/neos": "2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Flownative\\Neos\\CacheManagement\\": "Classes"
+    }
+  }
+}
