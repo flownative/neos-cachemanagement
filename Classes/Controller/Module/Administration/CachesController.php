@@ -39,6 +39,16 @@ class CachesController extends AbstractModuleController
                 'identifier' => 'TYPO3_TypoScript_Content',
                 'label' => 'Neos Content',
                 'backendType' => get_class($contentCache->getBackend())
+            ],
+            'Flow_Mvc_Routing_Route' => [
+                'identifier' => 'Flow_Mvc_Routing_Route',
+                'label' => 'Routes (Matching)',
+                'backendType' => get_class($contentCache->getBackend())
+            ],
+            'Flow_Mvc_Routing_Resolve' => [
+                'identifier' => 'Flow_Mvc_Routing_Resolve',
+                'label' => 'Routes (Resolving)',
+                'backendType' => get_class($contentCache->getBackend())
             ]
         ];
         $this->view->assign('caches', $caches);
