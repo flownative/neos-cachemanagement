@@ -11,10 +11,10 @@ namespace Flownative\Neos\CacheManagement\Controller\Module\Administration;
  * source code.
  */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Cache\CacheManager;
-use TYPO3\Flow\Error\Message;
-use TYPO3\Neos\Controller\Module\AbstractModuleController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Cache\CacheManager;
+use Neos\Flow\Error\Message;
+use Neos\Neos\Controller\Module\AbstractModuleController;
 
 /**
  * A Cache Management module controller
