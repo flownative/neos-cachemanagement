@@ -33,9 +33,9 @@ class CachesController extends AbstractModuleController
      */
     public function indexAction()
     {
-        $contentCache = $this->cacheManager->getCache('TYPO3_TypoScript_Content');
+        $contentCache = $this->cacheManager->getCache('Neos_Fusion_Content');
         $caches = [
-            'TYPO3_TypoScript_Content' => [
+            'Neos_Fusion_Content' => [
                 'identifier' => 'TYPO3_TypoScript_Content',
                 'label' => 'Neos Content',
                 'backendType' => get_class($contentCache->getBackend())
