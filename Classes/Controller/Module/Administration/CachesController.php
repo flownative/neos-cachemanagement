@@ -36,7 +36,7 @@ class CachesController extends AbstractModuleController
         $contentCache = $this->cacheManager->getCache('Neos_Fusion_Content');
         $caches = [
             'Neos_Fusion_Content' => [
-                'identifier' => 'TYPO3_TypoScript_Content',
+                'identifier' => 'Neos_Fusion_Content',
                 'label' => 'Neos Content',
                 'backendType' => get_class($contentCache->getBackend())
             ],
@@ -58,7 +58,7 @@ class CachesController extends AbstractModuleController
      * Create a new user
      *
      * @param string $cacheIdentifier
-     * @Flow\Validate(argumentName="cacheIdentifier", type="\TYPO3\Flow\Validation\Validator\NotEmptyValidator")
+     * @Flow\Validate(argumentName="cacheIdentifier", type="\Neos\Flow\Validation\Validator\NotEmptyValidator")
      * @return void
      */
     public function flushAction($cacheIdentifier)
