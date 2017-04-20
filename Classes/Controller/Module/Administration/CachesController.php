@@ -13,13 +13,12 @@ namespace Flownative\Neos\CacheManagement\Controller\Module\Administration;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cache\CacheManager;
-use Neos\Flow\Error\Message;
-use Neos\Neos\Controller\Module\AbstractModuleController;
+use Neos\Error\Messages\Message;
 
 /**
  * A Cache Management module controller
  */
-class CachesController extends AbstractModuleController
+class CachesController extends \Neos\Neos\Controller\Module\AbstractModuleController
 {
 
     /**
