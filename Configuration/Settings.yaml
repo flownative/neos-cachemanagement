@@ -11,6 +11,6 @@ Neos:
           flownativeCacheManagementCaches:
             label: 'Caches'
             icon: 'icon-bolt'
-            controller: '\Flownative\Neos\CacheManagement\Controller\Module\Administration\CachesController'
+            controller: 'Flownative\Neos\CacheManagement\Controller\Module\Administration\CachesController'
             description: 'Provides administration tools for maintaining caches.'
             privilegeTarget: 'Flownative.Neos.CacheManagement:Backend.Module.Administration.Caches'

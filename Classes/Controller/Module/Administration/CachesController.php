@@ -11,14 +11,15 @@ namespace Flownative\Neos\CacheManagement\Controller\Module\Administration;
  * source code.
  */
 
+use Neos\Error\Messages\Message;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cache\CacheManager;
-use Neos\Error\Messages\Message;
+use Neos\Neos\Controller\Module\AbstractModuleController;
 
 /**
  * A Cache Management module controller
  */
-class CachesController extends \Neos\Neos\Controller\Module\AbstractModuleController
+class CachesController extends AbstractModuleController
 {
 
     /**
@@ -29,6 +30,7 @@ class CachesController extends \Neos\Neos\Controller\Module\AbstractModuleContro
 
     /**
      * @return string
+     * @throws \Neos\Cache\Exception\NoSuchCacheException
      */
     public function indexAction()
     {
@@ -59,11 +61,13 @@ class CachesController extends \Neos\Neos\Controller\Module\AbstractModuleContro
      * @param string $cacheIdentifier
      * @Flow\Validate(argumentName="cacheIdentifier", type="\Neos\Flow\Validation\Validator\NotEmptyValidator")
      * @return void
+     * @throws \Neos\Cache\Exception\NoSuchCacheException
+     * @throws \Neos\Flow\Mvc\Exception\StopActionException
      */
     public function flushAction($cacheIdentifier)
     {
         $this->cacheManager->getCache($cacheIdentifier)->flush();
-        $this->addFlashMessage('Successfully flushed the cache "%s".', 'User created', Message::SEVERITY_OK, [ $cacheIdentifier ], 1448033946);
+        $this->addFlashMessage('Successfully flushed the cache "%s".', 'User created', Message::SEVERITY_OK, [$cacheIdentifier], 1448033946);
         $this->redirect('index');
     }
 }
