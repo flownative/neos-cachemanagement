@@ -11,15 +11,14 @@ namespace Flownative\Neos\CacheManagement\Controller\Module\Administration;
  * source code.
  */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Cache\CacheManager;
-use TYPO3\Flow\Error\Message;
-use TYPO3\Neos\Controller\Module\AbstractModuleController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Cache\CacheManager;
+use Neos\Error\Messages\Message;
 
 /**
  * A Cache Management module controller
  */
-class CachesController extends AbstractModuleController
+class CachesController extends \Neos\Neos\Controller\Module\AbstractModuleController
 {
 
     /**
@@ -33,10 +32,10 @@ class CachesController extends AbstractModuleController
      */
     public function indexAction()
     {
-        $contentCache = $this->cacheManager->getCache('TYPO3_TypoScript_Content');
+        $contentCache = $this->cacheManager->getCache('Neos_Fusion_Content');
         $caches = [
-            'TYPO3_TypoScript_Content' => [
-                'identifier' => 'TYPO3_TypoScript_Content',
+            'Neos_Fusion_Content' => [
+                'identifier' => 'Neos_Fusion_Content',
                 'label' => 'Neos Content',
                 'backendType' => get_class($contentCache->getBackend())
             ],
@@ -58,7 +57,7 @@ class CachesController extends AbstractModuleController
      * Create a new user
      *
      * @param string $cacheIdentifier
-     * @Flow\Validate(argumentName="cacheIdentifier", type="\TYPO3\Flow\Validation\Validator\NotEmptyValidator")
+     * @Flow\Validate(argumentName="cacheIdentifier", type="\Neos\Flow\Validation\Validator\NotEmptyValidator")
      * @return void
      */
     public function flushAction($cacheIdentifier)

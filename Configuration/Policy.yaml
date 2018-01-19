@@ -1,13 +1,13 @@
 privilegeTargets:
 
-  'TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
+  'Neos\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
 
     'Flownative.Neos.CacheManagement:Backend.Module.Administration.Caches':
       matcher: 'method(Flownative\Neos\CacheManagement\Controller\Module\Administration\CachesController->(index|flush)Action())'
 
 roles:
 
-  'TYPO3.Neos:Administrator':
+  'Neos.Neos:Administrator':
       privileges:
         -
           privilegeTarget: 'Flownative.Neos.CacheManagement:Backend.Module.Administration.Caches'
