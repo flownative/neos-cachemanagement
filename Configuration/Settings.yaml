@@ -1,10 +1,5 @@
 Neos:
   Neos:
-    userInterface:
-      translation:
-        autoInclude:
-          'Flownative.Neos.CacheManagement': ['Modules']
-
     modules:
       administration:
         submodules:
