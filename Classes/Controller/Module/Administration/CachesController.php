@@ -29,30 +29,21 @@ class CachesController extends AbstractModuleController
     protected $cacheManager;
 
     /**
-     * @return string
+     * @Flow\InjectConfiguration(path="caches")
+     * @var array
+     */
+    protected $cacheConfiguration;
+
+    /**
+     * @return void
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      */
     public function indexAction()
     {
-        $contentCache = $this->cacheManager->getCache('Neos_Fusion_Content');
-        $caches = [
-            'Neos_Fusion_Content' => [
-                'identifier' => 'Neos_Fusion_Content',
-                'label' => 'Neos Content',
-                'backendType' => get_class($contentCache->getBackend())
-            ],
-            'Flow_Mvc_Routing_Route' => [
-                'identifier' => 'Flow_Mvc_Routing_Route',
-                'label' => 'Routes (Matching)',
-                'backendType' => get_class($contentCache->getBackend())
-            ],
-            'Flow_Mvc_Routing_Resolve' => [
-                'identifier' => 'Flow_Mvc_Routing_Resolve',
-                'label' => 'Routes (Resolving)',
-                'backendType' => get_class($contentCache->getBackend())
-            ]
-        ];
-        $this->view->assign('caches', $caches);
+        foreach ($this->cacheConfiguration as $cacheIdentifier => $label) {
+            $this->cacheConfiguration[$cacheIdentifier]['backendType'] = get_class($this->cacheManager->getCache($cacheIdentifier)->getBackend());
+        }
+        $this->view->assign('caches', $this->cacheConfiguration);
     }
 
     /**
@@ -66,8 +57,12 @@ class CachesController extends AbstractModuleController
      */
     public function flushAction($cacheIdentifier)
     {
-        $this->cacheManager->getCache($cacheIdentifier)->flush();
-        $this->addFlashMessage('Successfully flushed the cache "%s".', 'User created', Message::SEVERITY_OK, [$cacheIdentifier], 1448033946);
+        if(in_array($cacheIdentifier, $this->cacheConfiguration)) {
+            $this->cacheManager->getCache($cacheIdentifier)->flush();
+            $this->addFlashMessage('Successfully flushed the cache "%s".', 'Cache cleared', Message::SEVERITY_OK, [$cacheIdentifier], 1448033946);
+        }else{
+            $this->addFlashMessage('Cache "%s" is not configured for flushing.', 'Not configured', Message::SEVERITY_ERROR, [$cacheIdentifier], 1550221927);
+        }
         $this->redirect('index');
     }
 }

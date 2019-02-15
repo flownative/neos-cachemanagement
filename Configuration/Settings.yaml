@@ -5,7 +5,17 @@ Neos:
         submodules:
           flownativeCacheManagementCaches:
             label: 'Caches'
-            icon: 'icon-bolt'
+            icon: 'fas fa-bolt'
             controller: 'Flownative\Neos\CacheManagement\Controller\Module\Administration\CachesController'
             description: 'Provides administration tools for maintaining caches.'
             privilegeTarget: 'Flownative.Neos.CacheManagement:Backend.Module.Administration.Caches'
+Flownative:
+  Neos:
+    CacheManagement:
+      caches:
+        Neos_Fusion_Content:
+          label: 'Neos Content'
+        Flow_Mvc_Routing_Route:
+          label: 'Routes (Matching)'
+        Flow_Mvc_Routing_Resolve:
+          label: 'Routes (Resolving)'
