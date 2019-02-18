@@ -57,7 +57,7 @@ class CachesController extends AbstractModuleController
      */
     public function flushAction($cacheIdentifier)
     {
-        if(in_array($cacheIdentifier, $this->cacheConfiguration)) {
+        if(array_key_exists($cacheIdentifier, $this->cacheConfiguration)) {
             $this->cacheManager->getCache($cacheIdentifier)->flush();
             $this->addFlashMessage('Successfully flushed the cache "%s".', 'Cache cleared', Message::SEVERITY_OK, [$cacheIdentifier], 1448033946);
         }else{
