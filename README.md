@@ -6,7 +6,7 @@
 
 ![Screenshot of the Cache Management Module](Documentation/BackendScreenshot.png)
 
-This [Neos](https://www.neos.io) backend module provides cache management functions to Neos administrators who don't have access to a Flow shell. In this early version, the backend module simply allows for flushing the content cache (TYPO3_TypoScript_Content).
+This [Neos](https://www.neos.io) backend module provides cache management functions to Neos administrators who don't have access to a Flow shell. In this early version, the backend module simply allows for flushing different caches (Neos_Fusion_Content, Flow_Mvc_Routing_Route and Flow_Mvc_Routing_Resolve by default).
 
 # Installation
 

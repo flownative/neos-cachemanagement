@@ -11,14 +11,14 @@
                 <th>&nbsp;</th>
             </tr>
             </thead>
-            <f:for each="{caches}" as="cache">
+            <f:for each="{caches}" key="cacheIdentifier" as="cache">
                 <tr>
-                    <td title="{cache.identifier}">{cache.label}</td>
+                    <td title="{cacheIdentifier}">{cache.label}</td>
                     <td>{cache.backendType}</td>
                     <td class="neos-action">
                         <div class="neos-pull-right">
-                            <f:link.action action="flush" arguments="{cacheIdentifier: cache.identifier}" class="neos-button neos-button-primary" title="Flush this cache">
-                                <i class="icon-refresh icon-white"></i> Flush
+                            <f:link.action action="flush" arguments="{cacheIdentifier: cacheIdentifier}" class="neos-button neos-button-primary" title="Flush this cache">
+                                <i class="fas fa-sync icon-white"></i> Flush
                             </f:link.action>
                         </div>
                     </td>
