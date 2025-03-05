@@ -10,6 +10,10 @@
                 <source>Backend</source>
                 <target xml:lang="de">Backend</target>
             </trans-unit>
+            <trans-unit id="table.description" xml:space="preserve" approved="yes">
+                <source>Description</source>
+                <target xml:lang="de">Beschreibung</target>
+            </trans-unit>
             <trans-unit id="option.flush" xml:space="preserve" approved="yes">
                 <source>Flush</source>
                 <target xml:lang="de">Leeren</target>

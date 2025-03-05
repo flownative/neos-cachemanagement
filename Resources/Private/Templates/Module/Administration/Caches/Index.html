@@ -10,6 +10,9 @@
                     {f:translate(id:'table.name', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
                 </th>
                 <th>
+                    {f:translate(id:'table.backend', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
+                </th>
+                <th>
                     {f:translate(id:'table.description', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
                 </th>
                 <th>&nbsp;</th>
@@ -19,6 +22,7 @@
                 <tr>
                     <td title="{cacheIdentifier}">{cache.label}</td>
                     <td>{cache.backendType}</td>
+                    <td>{cache.description}</td>
                     <td class="neos-action">
                         <div class="neos-pull-right">
                             <f:link.action action="flush" arguments="{cacheIdentifier: cacheIdentifier}" class="neos-button neos-button-primary" title="{f:translate(id:'option.flush.title', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}">

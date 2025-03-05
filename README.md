@@ -11,3 +11,19 @@ This [Neos](https://www.neos.io) backend module provides cache management functi
 # Installation
 
 Simply install this package via Composer. The package key is `flownative/neos-cachemanagement`.
+
+## Configuration
+
+### Add labels to a cache configuration
+
+To add a label and a description to a cache configuration, you can use the following configuration in your `Settings.yaml`:
+
+```yaml
+Flownative:
+  Neos:
+    CacheManagement:
+      caches:
+        Neos_Fusion_Content:
+          label: 'Neos Content'
+          description: 'Caches the rendering of Neos content elements.'
+```
