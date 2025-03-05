@@ -9,9 +9,11 @@
                 <th>
                     {f:translate(id:'table.name', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
                 </th>
-                <th>
-                    {f:translate(id:'table.backend', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
-                </th>
+                <f:if condition="{uiSettings.showBackendClass}">
+                    <th>
+                        {f:translate(id:'table.backend', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
+                    </th>
+                </f:if>
                 <th>
                     {f:translate(id:'table.description', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
                 </th>
@@ -21,7 +23,9 @@
             <f:for each="{caches}" key="cacheIdentifier" as="cache">
                 <tr>
                     <td title="{cacheIdentifier}">{cache.label}</td>
-                    <td>{cache.backendType}</td>
+                    <f:if condition="{uiSettings.showBackendClass}">
+                        <td>{cache.backendType}</td>
+                    </f:if>
                     <td>{cache.description}</td>
                     <td class="neos-action">
                         <div class="neos-pull-right">

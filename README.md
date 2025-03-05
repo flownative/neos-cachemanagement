@@ -62,3 +62,15 @@ Flownative:
         Neos_Fusion_Content:
           hidden: true
 ```
+
+### Hide the backend class
+
+To hide the backend class set the following configuration in your `Settings.yaml`:
+
+```yaml
+Flownative:
+  Neos:
+    CacheManagement:
+      ui:
+        showBackendClass: false
+```
