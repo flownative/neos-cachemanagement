@@ -74,3 +74,31 @@ Flownative:
       ui:
         showBackendClass: false
 ```
+
+### Run a command after flushing a cache
+
+If you want to run a flow command after flushing a cache, you can use the following configuration in your `Settings.yaml`:
+
+```yaml
+Flownative:
+  Neos:
+    CacheManagement:
+      caches:
+        Neos_Fusion_Content:
+          runAfter: 'foo:bar --baz'
+```
+
+#### Run the command asynchronously
+
+To run the flow command asynchronously:
+
+```yaml
+Flownative:
+  Neos:
+    CacheManagement:
+      caches:
+        Neos_Fusion_Content:
+          runAfter:
+            command: 'foo:bar --baz'
+            async: true
+```
