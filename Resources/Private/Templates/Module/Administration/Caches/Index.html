@@ -33,8 +33,10 @@
                 </tr>
             </f:for>
         </table>
-        <p class="neos-help-inline">
-            <i class="icon-info"></i> {f:translate(id:'cacheHint', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
-        </p>
+        <f:if condition="{uiSettings.showCacheHint}">
+            <p class="neos-help-inline">
+                <i class="icon-info"></i> {f:translate(id:'cacheHint', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
+            </p>
+        </f:if>
     </div>
 </f:section>

@@ -27,3 +27,15 @@ Flownative:
           label: 'Neos Content'
           description: 'Caches the rendering of Neos content elements.'
 ```
+
+### Hide Cache-Hint
+
+To hide the cache hint set the following configuration in your `Settings.yaml`:
+
+```yaml
+Flownative:
+  Neos:
+    CacheManagement:
+      ui:
+        showCacheHint: false
+```

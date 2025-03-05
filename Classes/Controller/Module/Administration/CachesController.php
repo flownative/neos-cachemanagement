@@ -35,6 +35,12 @@ class CachesController extends AbstractModuleController
     protected $cacheConfiguration;
 
     /**
+     * @Flow\InjectConfiguration(path="ui")
+     * @var array
+     */
+    protected array $uiSettings;
+
+    /**
      * @return void
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      */
@@ -44,6 +50,7 @@ class CachesController extends AbstractModuleController
             $this->cacheConfiguration[$cacheIdentifier]['backendType'] = get_class($this->cacheManager->getCache($cacheIdentifier)->getBackend());
         }
         $this->view->assign('caches', $this->cacheConfiguration);
+        $this->view->assign('uiSettings', $this->uiSettings);
     }
 
     /**
