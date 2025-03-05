@@ -32,7 +32,7 @@ class CachesController extends AbstractModuleController
      * @Flow\InjectConfiguration(path="caches")
      * @var array
      */
-    protected $cacheConfiguration;
+    protected array $cacheConfiguration;
 
     /**
      * @Flow\InjectConfiguration(path="ui")
@@ -44,12 +44,9 @@ class CachesController extends AbstractModuleController
      * @return void
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      */
-    public function indexAction()
+    public function indexAction(): void
     {
-        foreach ($this->cacheConfiguration as $cacheIdentifier => $label) {
-            $this->cacheConfiguration[$cacheIdentifier]['backendType'] = get_class($this->cacheManager->getCache($cacheIdentifier)->getBackend());
-        }
-        $this->view->assign('caches', $this->cacheConfiguration);
+        $this->view->assign('caches', $this->getCacheConfiguration());
         $this->view->assign('uiSettings', $this->uiSettings);
     }
 
@@ -62,14 +59,43 @@ class CachesController extends AbstractModuleController
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      * @throws \Neos\Flow\Mvc\Exception\StopActionException
      */
-    public function flushAction($cacheIdentifier)
+    public function flushAction(string $cacheIdentifier): void
     {
-        if(array_key_exists($cacheIdentifier, $this->cacheConfiguration)) {
+        if(array_key_exists($cacheIdentifier, $this->getCacheConfiguration())) {
             $this->cacheManager->getCache($cacheIdentifier)->flush();
             $this->addFlashMessage('Successfully flushed the cache "%s".', 'Cache cleared', Message::SEVERITY_OK, [$cacheIdentifier], 1448033946);
         }else{
             $this->addFlashMessage('Cache "%s" is not configured for flushing.', 'Not configured', Message::SEVERITY_ERROR, [$cacheIdentifier], 1550221927);
         }
         $this->redirect('index');
+    }
+
+    /**
+     * Get a list of cache configurations with backend type
+     * Removes empty values from the cache configuration
+     *
+     * @return array
+     * @throws \Neos\Cache\Exception\NoSuchCacheException
+     */
+    protected function getCacheConfiguration(): array
+    {
+        $cacheConfiguration = $this->cacheConfiguration;
+
+        if ($this->uiSettings['hideCachesWithoutLabel'] ?? false) {
+            $cacheConfiguration = array_filter($cacheConfiguration, function ($value) {
+                return !!$value;
+            });
+        }
+
+        foreach ($cacheConfiguration as $cacheIdentifier => $configuration) {
+            if (is_array($configuration) && array_key_exists('hidden', $configuration) && $configuration['hidden'] === true) {
+                unset($cacheConfiguration[$cacheIdentifier]);
+                continue;
+            }
+
+            $cacheConfiguration[$cacheIdentifier]['backendType'] = get_class($this->cacheManager->getCache($cacheIdentifier)->getBackend());
+        }
+
+        return $cacheConfiguration;
     }
 }

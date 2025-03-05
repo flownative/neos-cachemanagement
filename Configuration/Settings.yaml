@@ -14,6 +14,7 @@ Flownative:
     CacheManagement:
       ui:
         showCacheHint: true
+        hideCachesWithoutLabel: false
       caches:
         Neos_Fusion_Content:
           label: 'Neos Content'

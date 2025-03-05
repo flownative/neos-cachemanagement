@@ -39,3 +39,26 @@ Flownative:
       ui:
         showCacheHint: false
 ```
+
+### Hide a cache configuration
+
+You can hide all caches which do not have a label set by using the following configuration in your `Settings.yaml`:
+
+```yaml
+Flownative:
+  Neos:
+    CacheManagement:
+      ui:
+        hideCachesWithoutLabel: true
+```
+
+or you can hide a specific cache configuration by using the following configuration in your `Settings.yaml`:
+
+```yaml
+Flownative:
+  Neos:
+    CacheManagement:
+      caches:
+        Neos_Fusion_Content:
+          hidden: true
+```
