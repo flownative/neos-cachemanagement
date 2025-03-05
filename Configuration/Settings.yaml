@@ -12,10 +12,17 @@ Neos:
 Flownative:
   Neos:
     CacheManagement:
+      ui:
+        showCacheHint: true
+        showBackendClass: true
+        hideCachesWithoutLabel: false
       caches:
         Neos_Fusion_Content:
           label: 'Neos Content'
+          description: 'Caches the rendering of Neos content elements.'
         Flow_Mvc_Routing_Route:
           label: 'Routes (Matching)'
+          description: 'Caches the matching of routes to controllers and actions.'
         Flow_Mvc_Routing_Resolve:
           label: 'Routes (Resolving)'
+          description: 'Caches the resolving of routes to URIs.'

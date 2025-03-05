@@ -14,6 +14,7 @@ namespace Flownative\Neos\CacheManagement\Controller\Module\Administration;
 use Neos\Error\Messages\Message;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cache\CacheManager;
+use Neos\Flow\Core\Booting\Scripts;
 use Neos\Neos\Controller\Module\AbstractModuleController;
 
 /**
@@ -32,18 +33,28 @@ class CachesController extends AbstractModuleController
      * @Flow\InjectConfiguration(path="caches")
      * @var array
      */
-    protected $cacheConfiguration;
+    protected array $cacheConfiguration;
+
+    /**
+     * @Flow\InjectConfiguration(path="ui")
+     * @var array
+     */
+    protected array $uiSettings;
+
+    /**
+     * @Flow\InjectConfiguration(package="Neos.Flow")
+     * @var array
+     */
+    protected array $flowSettings;
 
     /**
      * @return void
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      */
-    public function indexAction()
+    public function indexAction(): void
     {
-        foreach ($this->cacheConfiguration as $cacheIdentifier => $label) {
-            $this->cacheConfiguration[$cacheIdentifier]['backendType'] = get_class($this->cacheManager->getCache($cacheIdentifier)->getBackend());
-        }
-        $this->view->assign('caches', $this->cacheConfiguration);
+        $this->view->assign('caches', $this->getCacheConfiguration());
+        $this->view->assign('uiSettings', $this->uiSettings);
     }
 
     /**
@@ -55,14 +66,71 @@ class CachesController extends AbstractModuleController
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      * @throws \Neos\Flow\Mvc\Exception\StopActionException
      */
-    public function flushAction($cacheIdentifier)
+    public function flushAction(string $cacheIdentifier): void
     {
-        if(array_key_exists($cacheIdentifier, $this->cacheConfiguration)) {
+        if (array_key_exists($cacheIdentifier, $this->getCacheConfiguration())) {
             $this->cacheManager->getCache($cacheIdentifier)->flush();
             $this->addFlashMessage('Successfully flushed the cache "%s".', 'Cache cleared', Message::SEVERITY_OK, [$cacheIdentifier], 1448033946);
-        }else{
+
+            if (array_key_exists('runAfter', $this->cacheConfiguration[$cacheIdentifier]) && $this->cacheConfiguration[$cacheIdentifier]['runAfter']) {
+                $runAfterConfig = $this->cacheConfiguration[$cacheIdentifier]['runAfter'];
+                $command = $runAfterConfig;
+                $asyncCommand = false;
+
+                if (is_array($runAfterConfig)) {
+                    if (array_key_exists('async', $runAfterConfig)) {
+                        $asyncCommand = $runAfterConfig['async'] === true;
+                    }
+
+                    if (!array_key_exists('command', $runAfterConfig)) {
+                        $this->addFlashMessage('Cache "%s" is configured to run a command after flushing, but no command is configured.', 'No command configured', Message::SEVERITY_ERROR, [$cacheIdentifier], 1741167344);
+                        $this->redirect('index');
+                    }
+
+                    $command = $runAfterConfig['command'];
+                }
+
+                if ($asyncCommand) {
+                    Scripts::executeCommandAsync($command, $this->flowSettings);
+                    $this->addFlashMessage('Running command "%s" asynchronously.', 'Command executed', Message::SEVERITY_NOTICE, [$command], 1741167356);
+                } else {
+                    Scripts::executeCommand($command, $this->flowSettings);
+                    $this->addFlashMessage('Running command "%s".', 'Command executed', Message::SEVERITY_NOTICE, [$command], 1741167361);
+                }
+            }
+        } else {
             $this->addFlashMessage('Cache "%s" is not configured for flushing.', 'Not configured', Message::SEVERITY_ERROR, [$cacheIdentifier], 1550221927);
         }
+
         $this->redirect('index');
+    }
+
+    /**
+     * Get a list of cache configurations with backend type
+     * Removes empty values from the cache configuration
+     *
+     * @return array
+     * @throws \Neos\Cache\Exception\NoSuchCacheException
+     */
+    protected function getCacheConfiguration(): array
+    {
+        $cacheConfiguration = $this->cacheConfiguration;
+
+        if ($this->uiSettings['hideCachesWithoutLabel'] ?? false) {
+            $cacheConfiguration = array_filter($cacheConfiguration, function ($value) {
+                return !!$value;
+            });
+        }
+
+        foreach ($cacheConfiguration as $cacheIdentifier => $configuration) {
+            if (is_array($configuration) && array_key_exists('hidden', $configuration) && $configuration['hidden'] === true) {
+                unset($cacheConfiguration[$cacheIdentifier]);
+                continue;
+            }
+
+            $cacheConfiguration[$cacheIdentifier]['backendType'] = get_class($this->cacheManager->getCache($cacheIdentifier)->getBackend());
+        }
+
+        return $cacheConfiguration;
     }
 }
