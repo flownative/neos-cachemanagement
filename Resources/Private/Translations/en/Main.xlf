@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file original="" product-name="Flownative.Neos.CacheManagement" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="table.name" xml:space="preserve" approved="yes">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="table.backend" xml:space="preserve" approved="yes">
+                <source>Backend</source>
+            </trans-unit>
+            <trans-unit id="option.flush" xml:space="preserve" approved="yes">
+                <source>Flush</source>
+            </trans-unit>
+            <trans-unit id="option.flush.title" xml:space="preserve" approved="yes">
+                <source>Flush this cache</source>
+            </trans-unit>
+            <trans-unit id="cacheHint" xml:space="preserve" approved="yes">
+                <source><![CDATA[Please note that having to flush the content caches manually usually is a sign of improper configuration. <a href="https://docs.neos.io/guide/rendering/caching">More about this</a>]]></source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
