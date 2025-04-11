@@ -6,25 +6,41 @@
         <table class="neos-table">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Backend</th>
+                <th>
+                    {f:translate(id:'table.name', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
+                </th>
+                <f:if condition="{uiSettings.showBackendClass}">
+                    <th>
+                        {f:translate(id:'table.backend', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
+                    </th>
+                </f:if>
+                <th>
+                    {f:translate(id:'table.description', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
+                </th>
                 <th>&nbsp;</th>
             </tr>
             </thead>
             <f:for each="{caches}" key="cacheIdentifier" as="cache">
                 <tr>
                     <td title="{cacheIdentifier}">{cache.label}</td>
-                    <td>{cache.backendType}</td>
+                    <f:if condition="{uiSettings.showBackendClass}">
+                        <td>{cache.backendType}</td>
+                    </f:if>
+                    <td>{cache.description}</td>
                     <td class="neos-action">
                         <div class="neos-pull-right">
-                            <f:link.action action="flush" arguments="{cacheIdentifier: cacheIdentifier}" class="neos-button neos-button-primary" title="Flush this cache">
-                                <i class="fas fa-sync icon-white"></i> Flush
+                            <f:link.action action="flush" arguments="{cacheIdentifier: cacheIdentifier}" class="neos-button neos-button-primary" title="{f:translate(id:'option.flush.title', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}">
+                                <i class="fas fa-sync icon-white"></i> {f:translate(id:'option.flush', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
                             </f:link.action>
                         </div>
                     </td>
                 </tr>
             </f:for>
         </table>
-        <p class="neos-help-inline"><i class="icon-info"></i> Please note that having to flush the content caches manually usually is a sign of improper configuration. <a href="http://neos.readthedocs.org/en/stable/CreatingASite/ContentCache.html">More about this</a></p>
+        <f:if condition="{uiSettings.showCacheHint}">
+            <p class="neos-help-inline">
+                <i class="icon-info"></i> {f:translate(id:'cacheHint', source:'Main', package:'Flownative.Neos.CacheManagement') -> f:format.raw()}
+            </p>
+        </f:if>
     </div>
 </f:section>
